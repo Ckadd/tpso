@@ -45,12 +45,21 @@ class Handler extends ExceptionHandler
      *
      * @return \Illuminate\Http\Response
      */
+    // public function render($request, Exception $exception)
+    // {
+    //     if ($exception) {
+    //         //dd($request, $exception);
+    //         return response()->view('errors.custom');
+    //     }
+    //     return parent::render($request, $exception);
+    // }
+
     public function render($request, Exception $exception)
     {
-        if ($exception) {
-            //dd($request, $exception);
-            return response()->view('errors.custom');
+        if ($exception instanceof CustomException) {
+            return response()->view('errors.custom', [], 500);
         }
+
         return parent::render($request, $exception);
     }
 }
